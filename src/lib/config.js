@@ -17,7 +17,7 @@ export const SITE = {
   /* Reemplaza las rutas por tus fotos en /public/fotos/.
      Si una foto no existe todavía, se muestra un placeholder con su etiqueta. */
   fotos: {
-    hero: '/fotos/hero.jpg',
+    hero: '/fotos/Save-the -Date J&A-06.jpg',
     historia: '/fotos/IMG_1830.JPG',
     galeria: [
       { src: '/fotos/Save-the -Date J&A-06.jpg', cls: 'g-a', label: 'Foto principal' },
