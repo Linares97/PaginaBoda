@@ -18,7 +18,7 @@ export const SITE = {
      Si una foto no existe todavía, se muestra un placeholder con su etiqueta. */
   fotos: {
     hero: '/fotos/hero.jpg',
-    historia: '/fotos/historia.jpg',
+    historia: '/fotos/IMG_1830.JPG',
     galeria: [
       { src: '/fotos/g1.jpg', cls: 'g-a', label: 'Foto principal' },
       { src: '/fotos/g2.jpg', cls: 'g-b', label: 'Foto 2' },
