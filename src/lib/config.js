@@ -20,9 +20,9 @@ export const SITE = {
     hero: '/fotos/hero.jpg',
     historia: '/fotos/IMG_1830.JPG',
     galeria: [
-      { src: '/fotos/g1.jpg', cls: 'g-a', label: 'Foto principal' },
+      { src: '/fotos/Save-the -Date J&A-06.jpg', cls: 'g-a', label: 'Foto principal' },
       { src: '/fotos/g2.jpg', cls: 'g-b', label: 'Foto 2' },
-      { src: '/fotos/g3.jpg', cls: 'g-c', label: 'Foto 3' },
+      { src: '/fotos/FullSizeRender (1).jpeg', cls: 'g-c', label: 'Foto 3' },
       { src: '/fotos/g4.jpg', cls: 'g-d', label: 'Foto 4' },
       { src: '/fotos/g5.jpg', cls: 'g-e', label: 'Foto 5' },
       { src: '/fotos/g6.jpg', cls: 'g-f', label: 'Foto 6' },
