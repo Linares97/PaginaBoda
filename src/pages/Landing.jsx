@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { SITE } from '../lib/config.js';
-import { useReveal, useCountdown, useParallax, Photo } from '../lib/ui.jsx';
+import { useReveal, useCountdown, useParallax, Photo, GrainOverlay, Particles } from '../lib/ui.jsx';
 
 function Nav() {
   const [solid, setSolid] = useState(false);
@@ -17,7 +16,7 @@ function Nav() {
         <a href="#historia">Historia</a>
         <a href="#evento">Evento</a>
         <a href="#galeria">Galería</a>
-        <Link className="cta" to="/rsvp">Confirmar</Link>
+        <a className="cta" href="#rsvp">Confirmar</a>
       </div>
     </nav>
   );
@@ -25,12 +24,13 @@ function Nav() {
 
 function Hero() {
   const mediaRef = useRef(null);
-  useParallax(mediaRef, 0.16);
+  useParallax(mediaRef, -0.16);
   return (
     <header className="hero">
       <div className="hero__media" ref={mediaRef}>
         <Photo src={SITE.fotos.hero} alt="Alejandra y Jean" label="Foto principal — horizontal" />
       </div>
+      <Particles density={40} />
       <div className="hero__inner">
         <p className="hero__date">{SITE.fechaTexto}</p>
         <h1 className="hero__names">
@@ -71,6 +71,8 @@ function Countdown() {
 }
 
 function Story() {
+  const photoRef = useRef(null);
+  useParallax(photoRef, -0.07);
   return (
     <section className="section" id="historia">
       <div className="container story">
@@ -94,7 +96,11 @@ function Story() {
           </p>
         </div>
         <div className="story__media reveal d1">
-          <Photo src={SITE.fotos.historia} label="Foto vertical (4:5)" />
+          <div className="story__frame">
+            <div className="story__parallax" ref={photoRef}>
+              <Photo src={SITE.fotos.historia} label="Foto vertical (4:5)" />
+            </div>
+          </div>
           <span className="stamp">Desde 2019</span>
         </div>
       </div>
@@ -214,15 +220,16 @@ function Gifts() {
 
 function RsvpBand() {
   return (
-    <section className="rsvpband">
+    <section className="rsvpband" id="rsvp">
+      <Particles density={30} />
       <div className="container reveal">
-        <span className="eyebrow" style={{ color: 'var(--azul-medio)' }}>Confirmá tu asistencia</span>
+        <span className="eyebrow" style={{ color: 'var(--azul-medio)' }}>Confirma tu asistencia</span>
         <h2>¿Nos acompañas?</h2>
         <p>
           Solo podrá ingresar quien esté en la lista, así que tu confirmación es muy importante.
-          Usa el enlace personal que te enviamos para confirmar por ti y tu familia.
+          Cada familia recibirá por WhatsApp un enlace personal para confirmar su asistencia.
         </p>
-        <Link className="btn-primary" to="/rsvp">Abrir mi invitación</Link>
+        <div className="rsvp-info"><span className="dot" />Revisa tu WhatsApp para abrir tu invitación personal</div>
       </div>
     </section>
   );
@@ -241,6 +248,7 @@ export default function Landing() {
   useReveal();
   return (
     <>
+      <GrainOverlay />
       <Nav />
       <Hero />
       <Countdown />

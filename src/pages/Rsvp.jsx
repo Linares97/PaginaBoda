@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { SITE } from '../lib/config.js';
+import { GrainOverlay } from '../lib/ui.jsx';
 
 const OPTIONS = [
   { key: 'ambos', label: 'Ambos' },
@@ -81,6 +82,7 @@ export default function Rsvp() {
 
   return (
     <Shell>
+      <Intro />
       <div className="container">
         <div className="rsvp-hero">
           <span className="eyebrow">{SITE.novios.ella} &amp; {SITE.novios.el} · {SITE.fechaTexto}</span>
@@ -139,7 +141,20 @@ export default function Rsvp() {
 }
 
 function Shell({ children }) {
-  return <main className="rsvp-page">{children}</main>;
+  return <main className="rsvp-page"><GrainOverlay />{children}</main>;
+}
+function Intro() {
+  return (
+    <div className="intro" aria-hidden="true">
+      <div className="intro__inner">
+        <span className="eyebrow">Estás invitado</span>
+        <div className="intro__names">
+          {SITE.novios.ella}<span className="amp">&amp;</span>{SITE.novios.el}
+        </div>
+        <div className="intro__line" />
+      </div>
+    </div>
+  );
 }
 function Msg({ title, body }) {
   return (

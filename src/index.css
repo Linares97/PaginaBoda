@@ -240,3 +240,70 @@ th { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color
 .btn-dark { background: var(--marino-deep); color: var(--crema); border: none; cursor: pointer; padding: 13px 28px; border-radius: 999px; font-family: var(--body); letter-spacing: 0.1em; font-size: 0.82rem; }
 .btn-ghost { background: transparent; border: 1px solid var(--marino); color: var(--marino); cursor: pointer; padding: 11px 22px; border-radius: 999px; font-family: var(--body); font-size: 0.78rem; letter-spacing: 0.08em; }
 .err { color: var(--vino); font-size: 0.85rem; margin-bottom: 12px; }
+
+/* ============ EFECTOS ============ */
+
+/* Grano / textura de revista impresa */
+.grain {
+  position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  opacity: 0.045; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@media (prefers-reduced-motion: reduce) { .grain { display: none; } }
+
+/* Partículas (polvo de luz) sobre fondos oscuros */
+.particles { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.hero__inner, .hero__scroll { z-index: 3; }
+
+/* Parallax: evita el salto inicial */
+.hero__media, .story__media .photo { will-change: transform; }
+
+/* Reveal con un toque más “editorial”: leve blur + escala */
+.reveal { filter: blur(6px); }
+.reveal.in { filter: blur(0); }
+.reveal { transition: opacity 0.9s var(--ease), transform 0.9s var(--ease), filter 0.9s var(--ease); }
+@media (prefers-reduced-motion: reduce) { .reveal { filter: none; } }
+
+/* ============ TRANSICIÓN DE APERTURA DEL RSVP ============ */
+.intro {
+  position: fixed; inset: 0; z-index: 200;
+  background: linear-gradient(160deg, #1f3a5f 0%, #0a1a2b 100%);
+  display: grid; place-items: center; text-align: center; color: var(--crema);
+  animation: introLift 0.9s var(--ease) forwards;
+  animation-delay: 2.1s;
+}
+.intro__inner { opacity: 0; animation: introIn 1s var(--ease) forwards 0.25s; }
+.intro .eyebrow { color: var(--azul-medio); display: block; margin-bottom: 18px; }
+.intro__names { font-family: var(--display); font-size: clamp(2.6rem, 9vw, 5.5rem); font-weight: 340; line-height: 1; }
+.intro__names .amp { font-style: italic; color: var(--azul-medio); display: block; font-size: 0.42em; margin: 0.1em 0; }
+.intro__line { height: 1px; background: var(--azul-medio); width: 0; margin: 26px auto 0; animation: introLine 1.2s var(--ease) forwards 0.6s; }
+@keyframes introIn { to { opacity: 1; } }
+@keyframes introLine { to { width: 180px; } }
+@keyframes introLift { to { transform: translateY(-100%); } }
+@media (prefers-reduced-motion: reduce) {
+  .intro { animation: introFade 0.4s forwards 0.6s; }
+  .intro__inner { animation: introIn 0.4s forwards; }
+  .intro__line { animation: none; width: 180px; }
+  @keyframes introFade { to { opacity: 0; visibility: hidden; } }
+}
+
+/* Entrada escalonada de las tarjetas de invitados tras la apertura */
+.guest-card { opacity: 0; transform: translateY(22px); animation: cardIn 0.7s var(--ease) forwards; }
+.rsvp-hero { opacity: 0; transform: translateY(22px); animation: cardIn 0.7s var(--ease) forwards; }
+@keyframes cardIn { to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .guest-card, .rsvp-hero { opacity: 1; transform: none; animation: none; }
+}
+
+/* Mensaje informativo (reemplaza el botón muerto) */
+.rsvp-info { display: inline-flex; align-items: center; gap: 12px; margin-top: 10px;
+  border: 1px solid rgba(245,239,227,0.3); border-radius: 999px; padding: 14px 26px;
+  font-size: 0.82rem; letter-spacing: 0.06em; color: var(--crema); }
+.rsvp-info .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--azul-medio); flex: none;
+  box-shadow: 0 0 0 0 rgba(167,196,226,0.7); animation: pulse 2.4s var(--ease) infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(167,196,226,0.6); } 70% { box-shadow: 0 0 0 12px rgba(167,196,226,0); } 100% { box-shadow: 0 0 0 0 rgba(167,196,226,0); } }
+
+/* Marco con recorte para el parallax de la foto de historia */
+.story__frame { overflow: hidden; border-radius: 4px; aspect-ratio: 4/5; }
+.story__parallax { width: 100%; height: 100%; will-change: transform; }
+.story__parallax .photo { aspect-ratio: auto; height: 122%; margin-top: -11%; border-radius: 0; }
