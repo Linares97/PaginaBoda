@@ -14,25 +14,28 @@ export const SITE = {
     url: 'https://simangiftregistry.web.app/table/20009325',
   },
 
-  /* Reemplaza las rutas por tus fotos en /public/fotos/.
-     Si una foto no existe todavía, se muestra un placeholder con su etiqueta. */
-  
-    galeria: {
+  // Foto de portada (horizontal) y foto de la sección "Nuestra historia" (vertical)
+  fotos: {
+    hero: '/fotos/Save-the -Date J&A-2.jpg',
+    historia: '/fotos/IMG_1830.JPG',
+  },
+
+  // Galería rotativa: 6 huecos que alternan con crossfade entre todo el pool
+  galeria: {
     slots: ['g-a', 'g-b', 'g-c', 'g-d', 'g-e', 'g-f'],
-    intervalMs: 4000,   // cada cuánto cambia cada hueco (~4s)
+    intervalMs: 4000,
     pool: [
-      '/fotos/Save-the -Date J&A-06.jpg',
       '/fotos/IMG_2925.jpeg',
       '/fotos/IMG_2003.JPG',
-      '/fotos/FullSizeRender (1).jpeg',
       '/fotos/IMG_3322.JPG',
-      '/fotos/Save-the -Date J&A-13.jpg',
       '/fotos/IMG_3329.jpeg',
       '/fotos/14-7-29.jpeg',
       '/fotos/W14-17-10.jpeg',
       '/fotos/W4.jpeg',
-      '/fotos/puerto.JPG'
-      // …agregá todas las que quieras, una por línea
+      '/fotos/puerto.JPG',
+      '/fotos/save-the-date-06.jpg',
+      '/fotos/save-the-date-13.jpg',
+      '/fotos/fullsize-1.jpeg',
     ],
   },
 
