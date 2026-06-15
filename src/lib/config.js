@@ -33,7 +33,6 @@ export const SITE = {
       '/fotos/W14-17-10.jpeg',
       '/fotos/W4.jpeg',
       '/fotos/puerto.JPG',
-      '/fotos/Save-the -Date J&A-06.jpg',
       '/fotos/Save-the -Date J&A-13.jpg',
       '/fotos/fullsize-1.jpeg',
     ],
