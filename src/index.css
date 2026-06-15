@@ -307,3 +307,12 @@ th { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color
 .story__frame { overflow: hidden; border-radius: 4px; aspect-ratio: 4/5; }
 .story__parallax { width: 100%; height: 100%; will-change: transform; }
 .story__parallax .photo { aspect-ratio: auto; height: 122%; margin-top: -11%; border-radius: 0; }
+
+/* ============ GALERÍA ROTATIVA (crossfade) ============ */
+.gallery .cell.xfade { position: relative; background: linear-gradient(135deg, var(--marino), var(--marino-deep)); }
+.gallery .xlayer {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transition: opacity 1s var(--ease), transform 1.1s var(--ease);
+}
+.gallery .xlayer.on { opacity: 1; }
+.gallery .cell.xfade:hover .xlayer.on { transform: scale(1.06); }

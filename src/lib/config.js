@@ -16,16 +16,23 @@ export const SITE = {
 
   /* Reemplaza las rutas por tus fotos en /public/fotos/.
      Si una foto no existe todavía, se muestra un placeholder con su etiqueta. */
-  fotos: {
-    hero: '/fotos/Save-the -Date J&A-2.jpg',
-    historia: '/fotos/IMG_1830.JPG',
-    galeria: [
-      { src: '/fotos/Save-the -Date J&A-06.jpg', cls: 'g-a', label: 'Foto principal' },
-      { src: '/fotos/IMG_2925.jpeg', cls: 'g-b', label: 'Foto 2' },
-      { src: '/fotos/FullSizeRender (1).jpeg', cls: 'g-c', label: 'Foto 3' },
-      { src: '/fotos/IMG_3322.JPG', cls: 'g-d', label: 'Foto 4' },
-      { src: '/fotos/Save-the -Date J&A-13.jpg', cls: 'g-e', label: 'Foto 5' },
-      { src: '/fotos/IMG_3329.jpeg', cls: 'g-f', label: 'Foto 6' },
+  
+    galeria: {
+    slots: ['g-a', 'g-b', 'g-c', 'g-d', 'g-e', 'g-f'],
+    intervalMs: 4000,   // cada cuánto cambia cada hueco (~4s)
+    pool: [
+      '/fotos/Save-the -Date J&A-06.jpg',
+      '/fotos/IMG_2925.jpeg',
+      '/fotos/IMG_2003.JPG',
+      '/fotos/FullSizeRender (1).jpeg',
+      '/fotos/IMG_3322.JPG',
+      '/fotos/Save-the -Date J&A-13.jpg',
+      '/fotos/IMG_3329.jpeg',
+      '/fotos/14-7-29.jpeg',
+      '/fotos/W14-17-10.jpeg',
+      '/fotos/W4.jpeg',
+      '/fotos/puerto.JPG'
+      // …agregá todas las que quieras, una por línea
     ],
   },
 

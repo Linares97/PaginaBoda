@@ -38,7 +38,7 @@ function Hero() {
           <span className="amp">&amp;</span>
           {SITE.novios.el}
         </h1>
-        <p className="hero__sub">Nos vamos a casar</p>
+        <p className="hero__sub">Nos vamos a casar · Guatemala</p>
       </div>
       <div className="hero__scroll">
         <span>Desliza</span>
@@ -173,7 +173,67 @@ function DressCode() {
   );
 }
 
+function GallerySlot({ cls, initial, pickNext, delay, interval, label }) {
+  const [layers, setLayers] = useState([initial, initial]);
+  const [active, setActive] = useState(0);
+  const [broken, setBroken] = useState(false);
+
+  useEffect(() => {
+    if (!initial) return;
+    let t;
+    const schedule = () => {
+      t = setTimeout(() => {
+        const next = pickNext();
+        if (next) {
+          setActive((a) => {
+            const back = 1 - a;
+            setLayers((ls) => { const c = [...ls]; c[back] = next; return c; });
+            return back;
+          });
+        }
+        schedule();
+      }, interval + Math.random() * 1200);
+    };
+    const start = setTimeout(schedule, delay);
+    return () => { clearTimeout(start); clearTimeout(t); };
+  }, [initial, pickNext, delay, interval]);
+
+  if (!initial || broken) {
+    return <div className={`cell ${cls}`}><div className="photo"><div className="ph">{label || 'Tu foto aquí'}</div></div></div>;
+  }
+  return (
+    <div className={`cell ${cls} xfade`}>
+      {layers.map((src, i) => (
+        <img
+          key={i}
+          src={src}
+          alt=""
+          className={`xlayer ${i === active ? 'on' : ''}`}
+          loading="lazy"
+          onError={() => i === active && setBroken(true)}
+        />
+      ))}
+    </div>
+  );
+}
+
 function Gallery() {
+  const G = SITE.galeria;
+  const slots = G.slots || ['g-a', 'g-b', 'g-c', 'g-d', 'g-e', 'g-f'];
+  const pool = G.pool || [];
+  const interval = G.intervalMs || 4000;
+  const displayed = useRef(slots.map((_, i) => pool[i] || null));
+
+  const makePick = (i) => () => {
+    if (pool.length <= slots.length) return null; // sin material extra, no rota
+    const taken = new Set(displayed.current);
+    const opts = pool.filter((p) => !taken.has(p));
+    const choice = opts.length ? opts[Math.floor(Math.random() * opts.length)]
+                               : pool[Math.floor(Math.random() * pool.length)];
+    displayed.current[i] = choice;
+    return choice;
+  };
+
   return (
     <section className="section section--alt" id="galeria">
       <div className="container">
@@ -182,10 +242,16 @@ function Gallery() {
           <h2>Un poco de nosotros</h2>
         </div>
         <div className="gallery">
-          {SITE.fotos.galeria.map((g, i) => (
-            <div className={`cell ${g.cls} reveal ${i % 3 === 1 ? 'd1' : i % 3 === 2 ? 'd2' : ''}`} key={i}>
-              <Photo src={g.src} label={g.label} />
-            </div>
+          {slots.map((cls, i) => (
+            <GallerySlot
+              key={i}
+              cls={`${cls} reveal ${i % 3 === 1 ? 'd1' : i % 3 === 2 ? 'd2' : ''}`}
+              initial={pool[i] || null}
+              pickNext={makePick(i)}
+              delay={i * 650}
+              interval={interval}
+              label={`Foto ${i + 1}`}
+            />
           ))}
         </div>
       </div>
