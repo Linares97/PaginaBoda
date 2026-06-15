@@ -38,7 +38,7 @@ function Hero() {
           <span className="amp">&amp;</span>
           {SITE.novios.el}
         </h1>
-        <p className="hero__sub">Nos vamos a casar · Guatemala</p>
+        <p className="hero__sub">Nos vamos a casar</p>
       </div>
       <div className="hero__scroll">
         <span>Desliza</span>
