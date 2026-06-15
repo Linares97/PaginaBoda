@@ -21,9 +21,9 @@ export const SITE = {
     historia: '/fotos/IMG_1830.JPG',
     galeria: [
       { src: '/fotos/Save-the -Date J&A-06.jpg', cls: 'g-a', label: 'Foto principal' },
-      { src: '/fotos/g2.jpg', cls: 'g-b', label: 'Foto 2' },
+      { src: '/fotos/IMG_2925.jpg', cls: 'g-b', label: 'Foto 2' },
       { src: '/fotos/FullSizeRender (1).jpeg', cls: 'g-c', label: 'Foto 3' },
-      { src: '/fotos/IMG_3329.jpeg', cls: 'g-d', label: 'Foto 4' },
+      { src: '/fotos/IMG_3322.jpeg', cls: 'g-d', label: 'Foto 4' },
       { src: '/fotos/Save-the -Date J&A-13.jpg', cls: 'g-e', label: 'Foto 5' },
       { src: '/fotos/IMG_3329.jpeg', cls: 'g-f', label: 'Foto 6' },
     ],
