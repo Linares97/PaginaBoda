@@ -173,45 +173,47 @@ function DressCode() {
   );
 }
 
-function GallerySlot({ cls, initial, pickNext, delay, interval, label }) {
+function GallerySlot({ cls, initial, nextSrc, recover, delay, interval, label }) {
   const [layers, setLayers] = useState([initial, initial]);
   const [active, setActive] = useState(0);
-  const [broken, setBroken] = useState(false);
+  const [dead, setDead] = useState(!initial);
 
   useEffect(() => {
     if (!initial) return;
     let t;
     const schedule = () => {
       t = setTimeout(() => {
-        const next = pickNext();
-        if (next) {
+        const n = nextSrc();
+        if (n) {
           setActive((a) => {
             const back = 1 - a;
-            setLayers((ls) => { const c = [...ls]; c[back] = next; return c; });
+            setLayers((ls) => { const c = [...ls]; c[back] = n; return c; });
             return back;
           });
         }
         schedule();
-      }, interval + Math.random() * 1200);
+      }, interval + Math.random() * 2000);
     };
     const start = setTimeout(schedule, delay);
     return () => { clearTimeout(start); clearTimeout(t); };
-  }, [initial, pickNext, delay, interval]);
+  }, [initial, nextSrc, delay, interval]);
 
-  if (!initial || broken) {
-    return <div className={`cell ${cls}`}><div className="photo"><div className="ph">{label || 'Tu foto aquí'}</div></div></div>;
+  const onErr = (i) => {
+    if (i !== active) return;
+    const r = recover(layers[i]);        // marca la rota y trae un reemplazo
+    if (r) setLayers((ls) => { const c = [...ls]; c[i] = r; return c; });
+    else setDead(true);
+  };
+
+  if (dead) {
+    return <div className={`cell ${cls}`}><div className="photo"><div className="ph">{label}</div></div></div>;
   }
   return (
     <div className={`cell ${cls} xfade`}>
       {layers.map((src, i) => (
-        <img
-          key={i}
-          src={src}
-          alt=""
+        <img key={i} src={src} alt="" loading="lazy"
           className={`xlayer ${i === active ? 'on' : ''}`}
-          loading="lazy"
-          onError={() => i === active && setBroken(true)}
-        />
+          onError={() => onErr(i)} />
       ))}
     </div>
   );
@@ -221,18 +223,21 @@ function Gallery() {
   const G = SITE.galeria;
   const slots = G.slots || ['g-a', 'g-b', 'g-c', 'g-d', 'g-e', 'g-f'];
   const pool = G.pool || [];
-  const interval = G.intervalMs || 4000;
+  const interval = G.intervalMs || 6000;
   const displayed = useRef(slots.map((_, i) => pool[i] || null));
+  const bad = useRef(new Set());
 
-  const makePick = (i) => () => {
-    if (pool.length <= slots.length) return null; // sin material extra, no rota
-    const taken = new Set(displayed.current);
-    const opts = pool.filter((p) => !taken.has(p));
-    const choice = opts.length ? opts[Math.floor(Math.random() * opts.length)]
-                               : pool[Math.floor(Math.random() * pool.length)];
+  // elige una foto válida (no rota, y que no se esté mostrando ya en otro hueco)
+  const pick = (i) => {
+    const fresh = pool.filter((p) => !bad.current.has(p) && !displayed.current.includes(p));
+    const usable = fresh.length ? fresh : pool.filter((p) => !bad.current.has(p) && p !== displayed.current[i]);
+    if (!usable.length) return null;
+    const choice = usable[Math.floor(Math.random() * usable.length)];
     displayed.current[i] = choice;
     return choice;
   };
+  const nextSrc = (i) => () => (pool.length > 1 ? pick(i) : null);
+  const recover = (i) => (src) => { bad.current.add(src); displayed.current[i] = null; return pick(i); };
 
   return (
     <section className="section section--alt" id="galeria">
@@ -247,8 +252,9 @@ function Gallery() {
               key={i}
               cls={`${cls} reveal ${i % 3 === 1 ? 'd1' : i % 3 === 2 ? 'd2' : ''}`}
               initial={pool[i] || null}
-              pickNext={makePick(i)}
-              delay={i * 650}
+              nextSrc={nextSrc(i)}
+              recover={recover(i)}
+              delay={i * 900}
               interval={interval}
               label={`Foto ${i + 1}`}
             />
