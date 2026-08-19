@@ -14,6 +14,22 @@ export const SITE = {
     url: 'https://simangiftregistry.web.app/table/20009325',
   },
 
+  // Boda civil — celebración íntima previa a la recepción de diciembre
+  civil: {
+    fechaISO: '2026-11-07T16:00:00-06:00',
+    fechaTexto: '07 · 11 · 2026',
+    fechaLarga: '7 de noviembre de 2026',
+    ceremonia: { hora: '4:00 PM' },
+    convivencia: { hora: '6:00 PM' },
+    lugar: 'Quintas de Alta Loma',
+    direccion: 'Calle Real Lote 38, Quintas de Alta Loma, Santiago Sacatepéquez, Sacatepéquez',
+    mapsUrl: 'https://maps.app.goo.gl/kaqPvVcQv8rxeCBF7',
+    whatsapp: {
+      numero: '50250185660',
+      mensaje: '¡Hola! Confirmo mi asistencia a la boda civil de Alejandra y Jean 💙',
+    },
+  },
+
   // Foto de portada (horizontal) y foto de la sección "Nuestra historia" (vertical)
   fotos: {
     hero: '/fotos/Save-the -Date J&A-2.jpg',
