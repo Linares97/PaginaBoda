@@ -54,6 +54,38 @@ export const SITE = {
     ],
   },
 
+  // Textos de la sección de confirmación embebida (RsvpSection)
+  rsvpTextos: {
+    intro:
+      'Nos encantaría que nos acompañes. Indica para cada persona si nos acompaña a la ceremonia, a la recepción, a ambas, o si lamentablemente no podrá.',
+    sinCodigo: {
+      titulo: 'Confirma desde tu link personal',
+      texto:
+        'Para confirmar tu asistencia, abre el enlace personal que te enviamos por WhatsApp — es único para ti y tu familia.',
+    },
+    notFound: {
+      titulo: 'No encontramos esta invitación',
+      texto: 'Revisa que el enlace esté completo, o escríbenos directamente y con gusto te ayudamos.',
+    },
+    errorCarga: {
+      titulo: 'No pudimos cargar tu invitación',
+      texto: 'Puede ser un problema de conexión. Intenta de nuevo en un momento.',
+      reintentar: 'Reintentar',
+    },
+    errorEnvio: 'No pudimos guardar tu confirmación. Intenta de nuevo.',
+    reintentar: 'Reintentar',
+    graciasTitulo: '¡Gracias!',
+    graciasTexto: 'Tu confirmación quedó registrada. Nos hace muy felices contar contigo.',
+    resumenTitulo: '¡Hola de nuevo!',
+    resumenTexto: 'Ya habías confirmado tu asistencia. Este es un resumen de tu respuesta:',
+    editar: 'Editar mi respuesta',
+    mensajeLabel: 'Mensaje para los novios (opcional)',
+    mensajePlaceholder: 'Déjanos unas palabras…',
+    enviar: 'Confirmar asistencia',
+    enviando: 'Guardando…',
+    faltan: 'Selecciona una opción para cada persona.',
+  },
+
   paleta: [
     { hex: '#1f3a5f', name: 'Marino' },
     { hex: '#a7c4e2', name: 'Azul medio' },

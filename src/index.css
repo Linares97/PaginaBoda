@@ -203,6 +203,13 @@ h1, h2, h3 { font-family: var(--display); font-weight: 380; line-height: 1.05; l
 
 .state { text-align: center; padding: 140px 24px; color: var(--tinta-soft); }
 .state h1 { font-family: var(--display); color: var(--tinta); font-size: 2rem; margin-bottom: 10px; }
+.state--inline { padding: 20px 0; }
+
+/* skeleton de carga (RsvpSection embebida) */
+.skel { background: rgba(18,32,54,0.08); border-radius: 8px; animation: skelPulse 1.6s ease-in-out infinite; }
+.skel-line { height: 14px; }
+@keyframes skelPulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .skel { animation: none; } }
 
 /* ================= Admin ================= */
 .admin { min-height: 100svh; background: var(--crema); padding: 40px 0; }

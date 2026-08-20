@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { SITE } from '../lib/config.js';
 import { useReveal, useCountdown, useParallax, Photo, GrainOverlay, Particles } from '../lib/ui.jsx';
+import RsvpSection from '../components/RsvpSection.jsx';
 
 function Nav() {
   const [solid, setSolid] = useState(false);
@@ -16,7 +18,7 @@ function Nav() {
         <a href="#historia">Historia</a>
         <a href="#evento">Evento</a>
         <a href="#galeria">Galería</a>
-        <a className="cta" href="#rsvp">Confirmar</a>
+        <a className="cta" href="#confirmar">Confirmar</a>
       </div>
     </nav>
   );
@@ -290,18 +292,21 @@ function Gifts() {
   );
 }
 
-function RsvpBand() {
+function ConfirmSection() {
+  const { code } = useParams();
+  const T = SITE.rsvpTextos;
   return (
-    <section className="rsvpband" id="rsvp">
-      <Particles density={30} />
-      <div className="container reveal">
-        <span className="eyebrow" style={{ color: 'var(--azul-medio)' }}>Confirma tu asistencia</span>
-        <h2>¿Nos acompañas?</h2>
-        <p>
-          Solo podrá ingresar quien esté en la lista, así que tu confirmación es muy importante.
-          Cada familia recibirá por WhatsApp un enlace personal para confirmar su asistencia.
-        </p>
-        <div className="rsvp-info"><span className="dot" />Revisa tu WhatsApp para abrir tu invitación personal</div>
+    <section className="section section--alt" id="confirmar">
+      <div className="container" style={{ maxWidth: 720 }}>
+        {code ? (
+          <RsvpSection code={code} />
+        ) : (
+          <div className="state state--inline reveal">
+            <span className="eyebrow" style={{ display: 'block', marginBottom: 14 }}>Confirma tu asistencia</span>
+            <h1>{T.sinCodigo.titulo}</h1>
+            <p>{T.sinCodigo.texto}</p>
+          </div>
+        )}
       </div>
     </section>
   );
@@ -329,7 +334,7 @@ export default function Landing() {
       <DressCode />
       <Gallery />
       <Gifts />
-      <RsvpBand />
+      <ConfirmSection />
       <Footer />
     </>
   );
