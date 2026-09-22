@@ -6,6 +6,24 @@ export const SITE = {
   fechaLarga: '5 de diciembre de 2026',
   ceremonia: { hora: '4:00 PM', lugar: 'Versatto, Guatemala' },
   recepcion: { hora: '6:00 PM — 11:00 PM', lugar: 'Versatto, Guatemala' },
+
+  // Tarjeta única del lugar (sección "El gran día").
+  // La foto vive en public/fotos/, que Vite sirve desde la raíz → ruta con "/".
+  lugar: {
+    nombre: 'Versatto',
+    ciudad: 'Guatemala',
+    foto: '/fotos/versatto.png',
+    fechaHora: '5 de diciembre de 2026 · desde las 4:00 PM',
+  },
+
+  // Línea de tiempo del día, en orden
+  itinerario: [
+    { hora: '4:00 PM', evento: 'Ceremonia' },
+    { hora: '5:00 PM', evento: 'Cóctel de bienvenida y fotos' },
+    { hora: '6:00 PM', evento: 'Inicio de la recepción' },
+    { hora: '11:00 PM', evento: 'Fin de la fiesta' },
+  ],
+
   mapsUrl:
     'https://www.google.com/maps/search/?api=1&query=@14.6304297,-90.6544713,19z&query_place_id=ChIJpTZSMXANiYURbL-9D23Wf0o',
   regalos: {

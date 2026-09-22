@@ -112,6 +112,7 @@ function Story() {
 
 function Events() {
   const E = SITE;
+  const L = E.lugar;
   return (
     <section className="section section--alt" id="evento">
       <div className="container">
@@ -119,23 +120,32 @@ function Events() {
           <span className="eyebrow">El gran día</span>
           <h2>{E.fechaLarga}</h2>
         </div>
-        <div className="events">
-          <div className="event reveal d1">
-            <h3>Ceremonia</h3>
-            <div className="time">{E.ceremonia.hora}</div>
-            <p className="place">{E.ceremonia.lugar}</p>
-            <div className="links">
-              <a href={E.mapsUrl} target="_blank" rel="noreferrer">Ver mapa</a>
-            </div>
+        <div className="venue reveal d1">
+          <div className="venue__media">
+            <Photo src={L.foto} alt={L.nombre} label={L.nombre} />
           </div>
-          <div className="event reveal d2">
-            <h3>Recepción</h3>
-            <div className="time">{E.recepcion.hora}</div>
-            <p className="place">{E.recepcion.lugar}</p>
-            <div className="links">
-              <a href={E.mapsUrl} target="_blank" rel="noreferrer">Ver mapa</a>
+          <div className="venue__body">
+            <h3 className="venue__name">{L.nombre}</h3>
+            <div className="venue__loc">
+              <span className="venue__city">{L.ciudad}</span>
+              <a className="venue__map" href={E.mapsUrl} target="_blank" rel="noreferrer">
+                Ver mapa
+              </a>
             </div>
+            <p className="venue__when">{L.fechaHora}</p>
           </div>
+        </div>
+
+        <div className="itinerary reveal d2">
+          <span className="eyebrow">Itinerario</span>
+          <ol className="timeline">
+            {E.itinerario.map((it) => (
+              <li className="timeline__item" key={`${it.hora}-${it.evento}`}>
+                <span className="timeline__time">{it.hora}</span>
+                <span className="timeline__event">{it.evento}</span>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

@@ -132,6 +132,79 @@ h1, h2, h3 { font-family: var(--display); font-weight: 380; line-height: 1.05; l
 .event .links a { font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1px solid var(--vino); color: var(--vino); padding-bottom: 2px; }
 @media (max-width: 720px) { .events { grid-template-columns: 1fr; } }
 
+/* el gran día — tarjeta única del lugar */
+.venue {
+  display: grid; grid-template-columns: 1.05fr 1fr;
+  background: var(--crema); border: 1px solid rgba(18,32,54,0.12);
+  border-radius: 6px; overflow: hidden; margin-top: 56px;
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.section--alt .venue { background: #fff; }
+.venue:hover { transform: translateY(-6px); box-shadow: 0 24px 50px -28px rgba(10,26,43,0.4); }
+.venue__media { min-height: 280px; }
+.venue__media .photo { width: 100%; height: 100%; border-radius: 0; }
+.venue__body { padding: clamp(32px, 4.4vw, 52px); display: flex; flex-direction: column; justify-content: center; }
+.venue__name { font-size: clamp(2rem, 4.4vw, 3rem); color: var(--marino); }
+.venue__loc { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 12px; }
+.venue__city { color: var(--tinta-soft); letter-spacing: 0.02em; }
+.venue__map {
+  display: inline-block; border: 1px solid var(--vino); color: var(--vino);
+  border-radius: 999px; padding: 9px 22px;
+  font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap;
+  transition: background 0.35s var(--ease), color 0.35s var(--ease), transform 0.35s var(--ease);
+}
+.venue__map:hover { background: var(--vino); color: var(--crema); transform: translateY(-2px); }
+.venue__when {
+  font-family: var(--display); font-style: italic; font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+  color: var(--marino); line-height: 1.45;
+  margin-top: 26px; padding-top: 22px; border-top: 1px solid rgba(18,32,54,0.12);
+}
+@media (max-width: 760px) {
+  .venue { grid-template-columns: 1fr; }
+  .venue__media { min-height: 0; }
+  .venue__media .photo { aspect-ratio: 16 / 10; height: auto; }
+}
+
+/* el gran día — itinerario en línea de tiempo */
+.itinerary { margin-top: clamp(48px, 7vw, 76px); }
+.itinerary .eyebrow { display: block; margin-bottom: 26px; }
+.timeline { --tl-time: clamp(92px, 13vw, 132px); --tl-gap: 30px; list-style: none; max-width: 620px; }
+.timeline__item {
+  position: relative; display: grid;
+  grid-template-columns: var(--tl-time) var(--tl-gap) 1fr;
+  padding-bottom: 30px;
+}
+.timeline__item:last-child { padding-bottom: 0; }
+/* punto */
+.timeline__item::before {
+  content: ""; position: absolute; z-index: 1;
+  top: calc(0.82rem - 5px); left: calc(var(--tl-time) + var(--tl-gap) / 2 - 5px);
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--crema); border: 2px solid var(--vino);
+}
+.section--alt .timeline__item::before { background: var(--crema-2); }
+/* línea que une un punto con el siguiente */
+.timeline__item:not(:last-child)::after {
+  content: ""; position: absolute;
+  top: 0.82rem; bottom: calc(-0.82rem); left: calc(var(--tl-time) + var(--tl-gap) / 2 - 1px);
+  width: 2px; background: rgba(31,58,95,0.22);
+}
+.timeline__time {
+  grid-column: 1; text-align: right;
+  font-family: var(--display); font-size: 1.15rem; line-height: 1.45;
+  color: var(--marino); white-space: nowrap;
+}
+.timeline__event { grid-column: 3; font-size: 1.02rem; line-height: 1.45; color: var(--tinta-soft); }
+@media (max-width: 560px) {
+  .timeline { --tl-time: 0px; --tl-gap: 26px; }
+  .timeline__time { grid-column: 3; text-align: left; margin-bottom: 2px; }
+  .timeline__event { grid-column: 3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .venue, .venue__map { transition: none; }
+  .venue:hover, .venue__map:hover { transform: none; }
+}
+
 /* dress code */
 .dress { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(28px,6vw,72px); align-items: center; }
 .swatches { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 26px; }

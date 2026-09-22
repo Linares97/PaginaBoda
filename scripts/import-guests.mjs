@@ -155,7 +155,7 @@ async function main() {
       `"${fam.label.replace(/"/g, '""')}"`,
       `"${names.replace(/"/g, '""')}"`,
       fam.mesa || '',
-      `${SITE_URL}/rsvp/${fam.code}`,
+      `${SITE_URL}/i/${fam.code}`,
     ];
     csv.push(row.join(','));
   }
