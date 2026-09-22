@@ -132,7 +132,6 @@ function Events() {
                 Ver mapa
               </a>
             </div>
-            <p className="venue__when">{L.fechaHora}</p>
           </div>
         </div>
 

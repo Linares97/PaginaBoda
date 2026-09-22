@@ -163,6 +163,8 @@ h1, h2, h3 { font-family: var(--display); font-weight: 380; line-height: 1.05; l
   .venue { grid-template-columns: 1fr; }
   .venue__media { min-height: 0; }
   .venue__media .photo { aspect-ratio: 16 / 10; height: auto; }
+  .venue__body { text-align: center; align-items: center; }
+  .venue__loc { justify-content: center; }
 }
 
 /* el gran día — itinerario en línea de tiempo */
@@ -195,10 +197,21 @@ h1, h2, h3 { font-family: var(--display); font-weight: 380; line-height: 1.05; l
   color: var(--marino); white-space: nowrap;
 }
 .timeline__event { grid-column: 3; font-size: 1.02rem; line-height: 1.45; color: var(--tinta-soft); }
-@media (max-width: 560px) {
-  .timeline { --tl-time: 0px; --tl-gap: 26px; }
-  .timeline__time { grid-column: 3; text-align: left; margin-bottom: 2px; }
-  .timeline__event { grid-column: 3; }
+/* móvil: toda la sección "El gran día" va centrada.
+   El itinerario pierde el riel lateral y separa cada punto con un punto centrado. */
+@media (max-width: 760px) {
+  #evento .section__head { text-align: center; margin: 0 auto; }
+  .itinerary { text-align: center; }
+  .timeline { max-width: none; margin: 0 auto; }
+  .timeline__item { display: block; padding-bottom: 26px; }
+  #evento .timeline__item::before { display: none; }
+  #evento .timeline__item:not(:last-child)::after {
+    top: auto; bottom: 9px; left: 50%; transform: translateX(-50%);
+    width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(31,58,95,0.3);
+  }
+  .timeline__time { display: block; text-align: center; margin-bottom: 2px; }
+  .timeline__event { display: block; }
 }
 @media (prefers-reduced-motion: reduce) {
   .venue, .venue__map { transition: none; }

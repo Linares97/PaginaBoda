@@ -68,7 +68,6 @@ export const SITE = {
       '/fotos/IMG_6323.jpeg',
       '/fotos/IMG_7837.jpeg',
       '/fotos/IMG_8237.jpeg',
-      '/fotos/IMG_8813.jpeg',
       '/fotos/IMG_8960.jpeg',
       '/fotos/W14-17-10.jpeg',
       '/fotos/W4.jpeg',
