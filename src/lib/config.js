@@ -63,7 +63,7 @@ export const SITE = {
       '/fotos/FullSizeRender (1).jpeg',
       '/fotos/IMG_2925.jpeg',
       '/fotos/IMG_2003.JPG',
-      '/fotos/IMG_3322.JPG',
+      '/fotos/riodulce.jpg',
       '/fotos/IMG_3329.jpeg',
       '/fotos/IMG_6323.jpeg',
       '/fotos/IMG_7837.jpeg',
