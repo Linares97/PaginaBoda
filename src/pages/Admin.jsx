@@ -1,11 +1,24 @@
 import { useEffect, useState } from 'react';
 
 const TOKEN_KEY = 'boda_admin_token';
+const CONFIRMADOS = ['ambos', 'ceremonia', 'recepcion'];
+
+/* Filtros de la tabla. `match` se evalúa por invitado. */
+const FILTROS = [
+  { id: 'todos', label: 'Todos', match: () => true },
+  { id: 'confirmados', label: 'Confirmados', match: (g) => CONFIRMADOS.includes(g.attendance) },
+  { id: 'pendiente', label: 'Pendientes', match: (g) => g.attendance === 'pendiente' },
+  { id: 'ninguno', label: 'No asisten', match: (g) => g.attendance === 'ninguno' },
+  { id: 'ceremonia', label: 'Ceremonia', match: (g) => ['ambos', 'ceremonia'].includes(g.attendance) },
+  { id: 'recepcion', label: 'Recepción', match: (g) => ['ambos', 'recepcion'].includes(g.attendance) },
+];
 
 export default function Admin() {
   const [token, setToken] = useState(() => sessionStorage.getItem(TOKEN_KEY) || '');
   const [data, setData] = useState(null);
   const [err, setErr] = useState('');
+  const [filtro, setFiltro] = useState('todos');
+  const [busca, setBusca] = useState('');
 
   useEffect(() => {
     if (!token) return;
@@ -30,6 +43,27 @@ export default function Admin() {
   };
 
   const s = data.stats;
+
+  // Conteos por filtro (sobre el total, no sobre lo ya filtrado)
+  const todosGuests = data.familias.flatMap((f) => f.guests);
+  const conteo = (f) => todosGuests.filter(f.match).length;
+
+  // Aplica estado + búsqueda. Los invitados se filtran dentro de cada invitación,
+  // y las invitaciones que quedan sin invitados visibles desaparecen.
+  const activo = FILTROS.find((f) => f.id === filtro) || FILTROS[0];
+  const q = busca.trim().toLowerCase();
+  const filas = data.familias
+    .map((f) => ({ ...f, guests: f.guests.filter(activo.match) }))
+    .filter((f) => f.guests.length > 0)
+    .filter((f) => {
+      if (!q) return true;
+      const texto = [f.label, f.mesa || '', ...f.guests.map((g) => `${g.nombre} ${g.apellido || ''}`)]
+        .join(' ')
+        .toLowerCase();
+      return texto.includes(q);
+    });
+  const visibles = filas.reduce((n, f) => n + f.guests.length, 0);
+
   return (
     <div className="admin">
       <div className="container">
@@ -65,6 +99,30 @@ export default function Admin() {
           ))}
         </div>
 
+        <div className="filters">
+          {FILTROS.map((f) => (
+            <button
+              key={f.id}
+              className={`chip ${filtro === f.id ? 'on' : ''}`}
+              onClick={() => setFiltro(f.id)}
+              aria-pressed={filtro === f.id}
+            >
+              {f.label} <span className="c">{conteo(f)}</span>
+            </button>
+          ))}
+          <input
+            className="filters__search"
+            type="search"
+            placeholder="Buscar nombre, invitación o mesa…"
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+          />
+          <span className="filters__count">
+            {visibles} {visibles === 1 ? 'invitado' : 'invitados'} · {filas.length}{' '}
+            {filas.length === 1 ? 'invitación' : 'invitaciones'}
+          </span>
+        </div>
+
         <div className="tablewrap">
           <table>
             <thead>
@@ -73,7 +131,12 @@ export default function Admin() {
               </tr>
             </thead>
             <tbody>
-              {data.familias.map((f) =>
+              {filas.length === 0 && (
+                <tr>
+                  <td className="table-empty" colSpan={5}>Ningún invitado coincide con este filtro.</td>
+                </tr>
+              )}
+              {filas.map((f) =>
                 f.guests.map((g, i) => (
                   <tr key={g.id}>
                     {i === 0 && <td rowSpan={f.guests.length}><strong>{f.label}</strong></td>}
