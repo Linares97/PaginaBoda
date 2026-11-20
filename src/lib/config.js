@@ -102,7 +102,6 @@ export const SITE = {
     graciasTexto: 'Tu confirmación quedó registrada. Nos hace muy felices contar contigo.',
     resumenTitulo: '¡Hola de nuevo!',
     resumenTexto: 'Ya habías confirmado tu asistencia. Este es un resumen de tu respuesta:',
-    editar: 'Editar mi respuesta',
     mensajeLabel: 'Mensaje para los novios (opcional)',
     mensajePlaceholder: 'Déjanos unas palabras…',
     enviar: 'Confirmar asistencia',

@@ -89,12 +89,7 @@ export default function RsvpSection({ code }) {
 
   if (phase === 'summary') {
     return (
-      <Summary
-        family={family}
-        answers={answers}
-        justSubmitted={justSubmitted}
-        onEdit={() => setPhase('form')}
-      />
+      <Summary family={family} answers={answers} justSubmitted={justSubmitted} />
     );
   }
 
@@ -157,7 +152,7 @@ export default function RsvpSection({ code }) {
   );
 }
 
-function Summary({ family, answers, justSubmitted, onEdit }) {
+function Summary({ family, answers, justSubmitted }) {
   const T = SITE.rsvpTextos;
   return (
     <div className="thanks">
@@ -171,9 +166,6 @@ function Summary({ family, answers, justSubmitted, onEdit }) {
           </li>
         ))}
       </ul>
-      <div style={{ marginTop: 26 }}>
-        <button className="btn-ghost" onClick={onEdit}>{T.editar}</button>
-      </div>
     </div>
   );
 }
