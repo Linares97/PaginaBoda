@@ -4,7 +4,7 @@ import { SITE } from '../lib/config.js';
 import { useReveal, useCountdown, useParallax, Photo, GrainOverlay, Particles } from '../lib/ui.jsx';
 import RsvpSection from '../components/RsvpSection.jsx';
 
-function Nav() {
+function Nav({ t }) {
   const [solid, setSolid] = useState(false);
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > window.innerHeight * 0.7);
@@ -15,48 +15,48 @@ function Nav() {
     <nav className={`nav ${solid ? 'solid' : ''}`}>
       <span className="brand">A &amp; J</span>
       <div className="links">
-        <a href="#historia">Historia</a>
-        <a href="#evento">Evento</a>
-        <a href="#galeria">Galería</a>
-        <a className="cta" href="#confirmar">Confirmar</a>
+        <a href="#historia">{t.nav.historia}</a>
+        <a href="#evento">{t.nav.evento}</a>
+        <a href="#galeria">{t.nav.galeria}</a>
+        <a className="cta" href="#confirmar">{t.nav.confirmar}</a>
       </div>
     </nav>
   );
 }
 
-function Hero() {
+function Hero({ t }) {
   const mediaRef = useRef(null);
   useParallax(mediaRef, -0.16);
   return (
     <header className="hero">
       <div className="hero__media" ref={mediaRef}>
-        <Photo src={SITE.fotos.hero} alt="Alejandra y Jean" label="Foto principal — horizontal" />
+        <Photo src={SITE.fotos.hero} alt="Alejandra y Jean" label={t.hero.fotoLabel} />
       </div>
       <Particles density={40} />
       <div className="hero__inner">
-        <p className="hero__date">{SITE.fechaTexto}</p>
+        <p className="hero__date">{t.fechaTexto}</p>
         <h1 className="hero__names">
           {SITE.novios.ella}
           <span className="amp">&amp;</span>
           {SITE.novios.el}
         </h1>
-        <p className="hero__sub">Nos vamos a casar · Guatemala</p>
+        <p className="hero__sub">{t.hero.sub}</p>
       </div>
       <div className="hero__scroll">
-        <span>Desliza</span>
+        <span>{t.hero.scroll}</span>
         <span className="line" />
       </div>
     </header>
   );
 }
 
-function Countdown() {
+function Countdown({ t }) {
   const { d, h, m, s } = useCountdown(SITE.fechaISO);
   const cells = [
-    { n: d, l: 'Días' },
-    { n: h, l: 'Horas' },
-    { n: m, l: 'Minutos' },
-    { n: s, l: 'Segundos' },
+    { n: d, l: t.countdown.dias },
+    { n: h, l: t.countdown.horas },
+    { n: m, l: t.countdown.minutos },
+    { n: s, l: t.countdown.segundos },
   ];
   return (
     <section className="count">
@@ -72,53 +72,41 @@ function Countdown() {
   );
 }
 
-function Story() {
+function Story({ t }) {
   const photoRef = useRef(null);
   useParallax(photoRef, -0.07);
   return (
     <section className="section" id="historia">
       <div className="container story">
         <div className="story__text reveal">
-          <span className="eyebrow">Nuestra historia</span>
-          <h2>Siete años, una decisión.</h2>
-          <p>
-            Empezó en septiembre de 2019, cuando coincidimos en el mismo trabajo durante las
-            prácticas de Alejandra. Lo que nació entre miradas curiosas y desayunos compartidos
-            pronto se volvió algo especial.
-          </p>
-          <p>
-            Nuestra primera cita fue en Carl's Jr., y desde ese primer desayuno supimos que esto
-            era amor a primera vista. Con los años viajamos, reímos y construimos una vida hecha de
-            buena comida, películas y nuevas aventuras.
-          </p>
-          <p>
-            Después de siete años juntos y una propuesta sorpresa rodeada de nuestras familias, hoy
-            damos el siguiente paso. Más que pareja, somos compañeros de vida — y queremos
-            celebrarlo con ustedes.
-          </p>
+          <span className="eyebrow">{t.historia.eyebrow}</span>
+          <h2>{t.historia.titulo}</h2>
+          {t.historia.parrafos.map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
         </div>
         <div className="story__media reveal d1">
           <div className="story__frame">
             <div className="story__parallax" ref={photoRef}>
-              <Photo src={SITE.fotos.historia} label="Foto vertical (4:5)" />
+              <Photo src={SITE.fotos.historia} label={t.historia.fotoLabel} />
             </div>
           </div>
-          <span className="stamp">Desde 2019</span>
+          <span className="stamp">{t.historia.sello}</span>
         </div>
       </div>
     </section>
   );
 }
 
-function Events() {
-  const E = SITE;
-  const L = E.lugar;
+function Events({ t }) {
+  const L = SITE.lugar;
+  const E = t.evento;
   return (
     <section className="section section--alt" id="evento">
       <div className="container">
         <div className="section__head reveal">
-          <span className="eyebrow">El gran día</span>
-          <h2>{E.fechaLarga}</h2>
+          <span className="eyebrow">{E.eyebrow}</span>
+          <h2>{t.fechaLarga}</h2>
         </div>
         <div className="venue reveal d1">
           <div className="venue__media">
@@ -127,16 +115,16 @@ function Events() {
           <div className="venue__body">
             <h3 className="venue__name">{L.nombre}</h3>
             <div className="venue__loc">
-              <span className="venue__city">{L.ciudad}</span>
-              <a className="venue__map" href={E.mapsUrl} target="_blank" rel="noreferrer">
-                Ver mapa
+              <span className="venue__city">{E.ciudad}</span>
+              <a className="venue__map" href={SITE.mapsUrl} target="_blank" rel="noreferrer">
+                {E.verMapa}
               </a>
             </div>
           </div>
         </div>
 
         <div className="itinerary reveal d2">
-          <span className="eyebrow">Itinerario</span>
+          <span className="eyebrow">{E.itinerarioTitulo}</span>
           <ol className="timeline">
             {E.itinerario.map((it) => (
               <li className="timeline__item" key={`${it.hora}-${it.evento}`}>
@@ -151,32 +139,30 @@ function Events() {
   );
 }
 
-function DressCode() {
+function DressCode({ t }) {
+  const V = t.vestimenta;
   return (
     <section className="section">
       <div className="container dress">
         <div className="reveal">
-          <span className="eyebrow">Código de vestimenta</span>
+          <span className="eyebrow">{V.eyebrow}</span>
           <h2 style={{ fontSize: 'clamp(1.9rem,4.5vw,3rem)', margin: '14px 0 6px' }}>
-            Formal, en nuestra paleta.
+            {V.titulo}
           </h2>
           <div className="swatches">
             {SITE.paleta.map((c) => (
               <div className="swatch" key={c.hex}>
                 <div className="dot" style={{ background: c.hex }} />
-                <span>{c.name}</span>
+                <span>{V.colores[c.key]}</span>
               </div>
             ))}
           </div>
         </div>
         <div className="dress__note reveal d1">
-          <p style={{ marginBottom: 18 }}>
-            Su presencia es lo más importante para nosotros. Les agradeceremos muchísimo si
-            acompañan la combinación de colores de la boda:
-          </p>
+          <p style={{ marginBottom: 18 }}>{V.intro}</p>
           <ul style={{ listStyle: 'none' }}>
-            <li><strong>Ellas:</strong> tonos de la paleta (azules, gris, marino).</li>
-            <li><strong>Ellos:</strong> tonos azules sobre fondo oscuro.</li>
+            <li><strong>{V.ellas}</strong> {V.ellasTexto}</li>
+            <li><strong>{V.ellos}</strong> {V.ellosTexto}</li>
           </ul>
         </div>
       </div>
@@ -230,7 +216,7 @@ function GallerySlot({ cls, initial, nextSrc, recover, delay, interval, label })
   );
 }
 
-function Gallery() {
+function Gallery({ t }) {
   const G = SITE.galeria;
   const slots = G.slots || ['g-a', 'g-b', 'g-c', 'g-d', 'g-e', 'g-f'];
   const pool = G.pool || [];
@@ -254,8 +240,8 @@ function Gallery() {
     <section className="section section--alt" id="galeria">
       <div className="container">
         <div className="section__head reveal">
-          <span className="eyebrow">Momentos</span>
-          <h2>Un poco de nosotros</h2>
+          <span className="eyebrow">{t.galeria.eyebrow}</span>
+          <h2>{t.galeria.titulo}</h2>
         </div>
         <div className="gallery">
           {slots.map((cls, i) => (
@@ -267,7 +253,7 @@ function Gallery() {
               recover={recover(i)}
               delay={i * 900}
               interval={interval}
-              label={`Foto ${i + 1}`}
+              label={t.galeria.fotoLabel.replace('{n}', i + 1)}
             />
           ))}
         </div>
@@ -276,32 +262,30 @@ function Gallery() {
   );
 }
 
-function Gifts() {
+function Gifts({ t }) {
   const R = SITE.regalos;
+  const G = t.regalos;
   return (
     <section className="section">
       <div className="container">
         <div className="gifts__card reveal">
-          <h2>Mesa de regalos</h2>
+          <h2>{G.titulo}</h2>
+          <p>{G.intro.replace('{tienda}', R.tienda)}</p>
           <p>
-            No hay mejor regalo que tu presencia. Si deseas acompañarnos con un detalle para nuestro
-            futuro hogar, tenemos una lista en {R.tienda}.
-          </p>
-          <p>
-            En cualquier sucursal física da nuestros apellidos <em>“Linares Chacón”</em> y el número
-            de evento <span className="evt">{R.evento}</span>, o en línea:
+            {G.instruccionesPre} <em>“Linares Chacón”</em> {G.instruccionesMedio}{' '}
+            <span className="evt">{R.evento}</span>{G.instruccionesPost}
           </p>
           <a className="gifts__btn" href={R.url} target="_blank" rel="noreferrer">
-            Ver lista de regalos
+            {G.boton}
           </a>
-          <p className="gifts__note">Nota: no se colocará mesa de regalos el día del evento.</p>
+          <p className="gifts__note">{G.nota}</p>
         </div>
       </div>
     </section>
   );
 }
 
-function ConfirmSection() {
+function ConfirmSection({ t, onLang }) {
   const { code } = useParams();
   // Sin código no hay familia, así que no hay idioma que elegir: siempre español.
   const T = SITE.rsvpTextos.es;
@@ -309,10 +293,10 @@ function ConfirmSection() {
     <section className="section section--alt" id="confirmar">
       <div className="container" style={{ maxWidth: 720 }}>
         {code ? (
-          <RsvpSection code={code} />
+          <RsvpSection code={code} onLang={onLang} />
         ) : (
           <div className="state state--inline reveal">
-            <span className="eyebrow" style={{ display: 'block', marginBottom: 14 }}>Confirma tu asistencia</span>
+            <span className="eyebrow" style={{ display: 'block', marginBottom: 14 }}>{t.confirmar.eyebrow}</span>
             <h1>{T.sinCodigo.titulo}</h1>
             <p>{T.sinCodigo.texto}</p>
           </div>
@@ -322,30 +306,34 @@ function ConfirmSection() {
   );
 }
 
-function Footer() {
+function Footer({ t }) {
   return (
     <footer className="footer">
       <div className="names">{SITE.novios.ella} &amp; {SITE.novios.el}</div>
-      <div className="date">{SITE.fechaLarga} · Versatto, Guatemala</div>
+      <div className="date">{t.fechaLarga} · {t.footer.lugar}</div>
     </footer>
   );
 }
 
 export default function Landing() {
   useReveal();
+  // El idioma se decide una sola vez aquí: RsvpSection avisa el lang de la familia
+  // al cargarla. Sin código en la URL nunca se llama y queda en español.
+  const [lang, setLang] = useState('es');
+  const t = SITE.landingTextos[lang] || SITE.landingTextos.es;
   return (
     <>
       <GrainOverlay />
-      <Nav />
-      <Hero />
-      <Countdown />
-      <Story />
-      <Events />
-      <DressCode />
-      <Gallery />
-      <Gifts />
-      <ConfirmSection />
-      <Footer />
+      <Nav t={t} />
+      <Hero t={t} />
+      <Countdown t={t} />
+      <Story t={t} />
+      <Events t={t} />
+      <DressCode t={t} />
+      <Gallery t={t} />
+      <Gifts t={t} />
+      <ConfirmSection t={t} onLang={setLang} />
+      <Footer t={t} />
     </>
   );
 }

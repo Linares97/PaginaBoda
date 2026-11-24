@@ -9,7 +9,7 @@ function textos(family) {
   return SITE.rsvpTextos[lang] || SITE.rsvpTextos.es;
 }
 
-export default function RsvpSection({ code }) {
+export default function RsvpSection({ code, onLang }) {
   const [phase, setPhase] = useState('loading'); // loading | notfound | error | form | summary
   const [family, setFamily] = useState(null);
   const [answers, setAnswers] = useState({});
@@ -25,6 +25,8 @@ export default function RsvpSection({ code }) {
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then((data) => {
         setFamily(data);
+        // El Landing usa el mismo idioma de esta familia para traducir el resto de la página.
+        onLang?.(data.lang === 'en' ? 'en' : 'es');
         const init = {};
         data.guests.forEach((g) => { init[g.id] = g.attendance === 'pendiente' ? null : g.attendance; });
         setAnswers(init);
