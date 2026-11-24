@@ -285,7 +285,7 @@ function Gifts({ t }) {
   );
 }
 
-function ConfirmSection({ t, onLang }) {
+/*function ConfirmSection({ t, onLang }) {
   const { code } = useParams();
   // Sin código no hay familia, así que no hay idioma que elegir: siempre español.
   const T = SITE.rsvpTextos.es;
@@ -304,7 +304,7 @@ function ConfirmSection({ t, onLang }) {
       </div>
     </section>
   );
-}
+}*/
 
 function Footer({ t }) {
   return (
