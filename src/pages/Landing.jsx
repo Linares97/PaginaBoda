@@ -303,7 +303,8 @@ function Gifts() {
 
 function ConfirmSection() {
   const { code } = useParams();
-  const T = SITE.rsvpTextos;
+  // Sin código no hay familia, así que no hay idioma que elegir: siempre español.
+  const T = SITE.rsvpTextos.es;
   return (
     <section className="section section--alt" id="confirmar">
       <div className="container" style={{ maxWidth: 720 }}>

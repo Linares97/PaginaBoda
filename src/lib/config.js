@@ -78,35 +78,85 @@ export const SITE = {
     ],
   },
 
-  // Textos de la sección de confirmación embebida (RsvpSection)
+  // Textos de la sección de confirmación embebida (RsvpSection), por idioma.
+  // El idioma lo define families.lang: 'en' → inglés; vacío o cualquier otro valor → español.
   rsvpTextos: {
-    intro:
-      'Nos encantaría que nos acompañes. Indica para cada persona si nos acompaña a la ceremonia, a la recepción, a ambas, o si lamentablemente no podrá.',
-    sinCodigo: {
-      titulo: 'Confirma desde tu link personal',
-      texto:
-        'Para confirmar tu asistencia, abre el enlace personal que te enviamos por WhatsApp — es único para ti y tu familia.',
-    },
-    notFound: {
-      titulo: 'No encontramos esta invitación',
-      texto: 'Revisa que el enlace esté completo, o escríbenos directamente y con gusto te ayudamos.',
-    },
-    errorCarga: {
-      titulo: 'No pudimos cargar tu invitación',
-      texto: 'Puede ser un problema de conexión. Intenta de nuevo en un momento.',
+    es: {
+      cargando: 'Cargando tu invitación…',
+      saludo: '¡Hola, {label}!',
+      intro:
+        'Nos encantaría que nos acompañes. Indica para cada persona si nos acompaña a la ceremonia, a la recepción, a ambas, o si lamentablemente no podrá.',
+      opciones: {
+        ambos: 'Ambos',
+        ceremonia: 'Ceremonia',
+        recepcion: 'Recepción',
+        ninguno: 'No podré',
+      },
+      sinCodigo: {
+        titulo: 'Confirma desde tu link personal',
+        texto:
+          'Para confirmar tu asistencia, abre el enlace personal que te enviamos por WhatsApp — es único para ti y tu familia.',
+      },
+      notFound: {
+        titulo: 'No encontramos esta invitación',
+        texto: 'Revisa que el enlace esté completo, o escríbenos directamente y con gusto te ayudamos.',
+      },
+      errorCarga: {
+        titulo: 'No pudimos cargar tu invitación',
+        texto: 'Puede ser un problema de conexión. Intenta de nuevo en un momento.',
+        reintentar: 'Reintentar',
+      },
+      errorEnvio: 'No pudimos guardar tu confirmación. Intenta de nuevo.',
       reintentar: 'Reintentar',
+      graciasTitulo: '¡Gracias!',
+      graciasTexto: 'Tu confirmación quedó registrada. Nos hace muy felices contar contigo.',
+      resumenTitulo: '¡Hola de nuevo!',
+      resumenTexto: 'Ya habías confirmado tu asistencia. Este es un resumen de tu respuesta:',
+      mensajeLabel: 'Mensaje para los novios (opcional)',
+      mensajePlaceholder: 'Déjanos unas palabras…',
+      enviar: 'Confirmar asistencia',
+      enviando: 'Guardando…',
+      faltan: 'Selecciona una opción para cada persona.',
+      volverInicio: 'Volver al inicio',
     },
-    errorEnvio: 'No pudimos guardar tu confirmación. Intenta de nuevo.',
-    reintentar: 'Reintentar',
-    graciasTitulo: '¡Gracias!',
-    graciasTexto: 'Tu confirmación quedó registrada. Nos hace muy felices contar contigo.',
-    resumenTitulo: '¡Hola de nuevo!',
-    resumenTexto: 'Ya habías confirmado tu asistencia. Este es un resumen de tu respuesta:',
-    mensajeLabel: 'Mensaje para los novios (opcional)',
-    mensajePlaceholder: 'Déjanos unas palabras…',
-    enviar: 'Confirmar asistencia',
-    enviando: 'Guardando…',
-    faltan: 'Selecciona una opción para cada persona.',
+    en: {
+      cargando: 'Loading your invitation…',
+      saludo: 'Hello, {label}!',
+      intro:
+        'We would love to have you with us. For each person, let us know whether they will join us for the ceremony, the reception, both, or sadly cannot attend.',
+      opciones: {
+        ambos: 'Both',
+        ceremonia: 'Ceremony',
+        recepcion: 'Reception',
+        ninguno: "Can't attend",
+      },
+      sinCodigo: {
+        titulo: 'Confirm from your personal link',
+        texto:
+          'To confirm your attendance, please open the personal link we sent you on WhatsApp — it is unique to you and your family.',
+      },
+      notFound: {
+        titulo: "We couldn't find this invitation",
+        texto: "Please check that the link is complete, or message us directly and we'll gladly help.",
+      },
+      errorCarga: {
+        titulo: "We couldn't load your invitation",
+        texto: 'It may be a connection issue. Please try again in a moment.',
+        reintentar: 'Try again',
+      },
+      errorEnvio: "We couldn't save your confirmation. Please try again.",
+      reintentar: 'Try again',
+      graciasTitulo: 'Thank you!',
+      graciasTexto: "Your response has been saved. We're so happy you'll be with us.",
+      resumenTitulo: 'Hello again!',
+      resumenTexto: 'You have already confirmed your attendance. Here is a summary of your response:',
+      mensajeLabel: 'Message for the couple (optional)',
+      mensajePlaceholder: 'Leave us a few words…',
+      enviar: 'Confirm attendance',
+      enviando: 'Saving…',
+      faltan: 'Please choose an option for each guest.',
+      volverInicio: 'Back to home',
+    },
   },
 
   paleta: [

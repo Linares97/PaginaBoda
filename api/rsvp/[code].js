@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   const { code } = req.query;
   try {
     const fam = await db().execute({
-      sql: 'SELECT id, code, label, mesa, responded_at FROM families WHERE code = ?',
+      sql: 'SELECT id, code, label, mesa, responded_at, lang FROM families WHERE code = ?',
       args: [code],
     });
     if (fam.rows.length === 0) return res.status(404).json({ error: 'no encontrada' });
@@ -23,6 +23,7 @@ export default async function handler(req, res) {
     return res.status(200).json({
       label: f.label,
       mesa: f.mesa,
+      lang: f.lang === 'en' ? 'en' : 'es',
       respondedAt: f.responded_at,
       message: msg.rows[0]?.body || '',
       guests: guests.rows,

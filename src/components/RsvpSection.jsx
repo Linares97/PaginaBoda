@@ -1,16 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { SITE } from '../lib/config.js';
 
-const OPTIONS = [
-  { key: 'ambos', label: 'Ambos' },
-  { key: 'ceremonia', label: 'Ceremonia' },
-  { key: 'recepcion', label: 'Recepción' },
-  { key: 'ninguno', label: 'No podré' },
-];
-const OPTION_LABEL = Object.fromEntries(OPTIONS.map((o) => [o.key, o.label]));
+const OPTION_KEYS = ['ambos', 'ceremonia', 'recepcion', 'ninguno'];
+
+/* Español como idioma por defecto: solo se usa inglés si family.lang === 'en'. */
+function textos(family) {
+  const lang = family?.lang === 'en' ? 'en' : 'es';
+  return SITE.rsvpTextos[lang] || SITE.rsvpTextos.es;
+}
 
 export default function RsvpSection({ code }) {
-  const T = SITE.rsvpTextos;
   const [phase, setPhase] = useState('loading'); // loading | notfound | error | form | summary
   const [family, setFamily] = useState(null);
   const [answers, setAnswers] = useState({});
@@ -71,7 +70,10 @@ export default function RsvpSection({ code }) {
     }
   }
 
-  if (phase === 'loading') return <Skeleton />;
+  // Hasta que carga la familia (o si falla) no sabemos el idioma → español.
+  const T = textos(family);
+
+  if (phase === 'loading') return <Skeleton label={T.cargando} />;
 
   if (phase === 'notfound') {
     return <Msg title={T.notFound.titulo} body={T.notFound.texto} />;
@@ -89,7 +91,7 @@ export default function RsvpSection({ code }) {
 
   if (phase === 'summary') {
     return (
-      <Summary family={family} answers={answers} justSubmitted={justSubmitted} />
+      <Summary family={family} answers={answers} justSubmitted={justSubmitted} t={T} />
     );
   }
 
@@ -99,7 +101,7 @@ export default function RsvpSection({ code }) {
     <div>
       <div className="rsvp-hero">
         <span className="eyebrow">{SITE.novios.ella} &amp; {SITE.novios.el} · {SITE.fechaTexto}</span>
-        <h1>¡Hola, {family.label}!</h1>
+        <h1>{T.saludo.replace('{label}', family.label)}</h1>
         <p>{T.intro}</p>
       </div>
 
@@ -107,15 +109,15 @@ export default function RsvpSection({ code }) {
         <div className="guest-card" key={g.id}>
           <div className="gname">{g.nombre} {g.apellido || ''}</div>
           <div className="opt-row">
-            {OPTIONS.map((o) => {
-              const sel = answers[g.id] === o.key;
+            {OPTION_KEYS.map((key) => {
+              const sel = answers[g.id] === key;
               return (
                 <div
-                  key={o.key}
-                  className={`opt ${sel ? 'sel' : ''} ${sel && o.key === 'ninguno' ? 'no' : ''}`}
-                  onClick={() => choose(g.id, o.key)}
+                  key={key}
+                  className={`opt ${sel ? 'sel' : ''} ${sel && key === 'ninguno' ? 'no' : ''}`}
+                  onClick={() => choose(g.id, key)}
                 >
-                  {o.label}
+                  {T.opciones[key]}
                 </div>
               );
             })}
@@ -152,17 +154,16 @@ export default function RsvpSection({ code }) {
   );
 }
 
-function Summary({ family, answers, justSubmitted }) {
-  const T = SITE.rsvpTextos;
+function Summary({ family, answers, justSubmitted, t }) {
   return (
     <div className="thanks">
       <div className="check">✓</div>
-      <h1>{justSubmitted ? T.graciasTitulo : T.resumenTitulo}</h1>
-      <p>{justSubmitted ? T.graciasTexto : T.resumenTexto}</p>
+      <h1>{justSubmitted ? t.graciasTitulo : t.resumenTitulo}</h1>
+      <p>{justSubmitted ? t.graciasTexto : t.resumenTexto}</p>
       <ul style={{ listStyle: 'none', marginTop: 22, textAlign: 'left', maxWidth: 380, marginInline: 'auto' }}>
         {family.guests.map((g) => (
           <li key={g.id} style={{ padding: '8px 0', borderBottom: '1px solid rgba(18,32,54,0.08)' }}>
-            <strong>{g.nombre} {g.apellido || ''}</strong> — {OPTION_LABEL[answers[g.id]] || OPTION_LABEL.ninguno}
+            <strong>{g.nombre} {g.apellido || ''}</strong> — {t.opciones[answers[g.id]] || t.opciones.ninguno}
           </li>
         ))}
       </ul>
@@ -180,9 +181,9 @@ function Msg({ title, body, action }) {
   );
 }
 
-function Skeleton() {
+function Skeleton({ label }) {
   return (
-    <div aria-hidden="true">
+    <div role="status" aria-label={label}>
       <div className="rsvp-hero">
         <div className="skel skel-line" style={{ width: 160, height: 12, margin: '0 auto 16px' }} />
         <div className="skel skel-line" style={{ height: 32, width: '55%', margin: '0 auto 12px' }} />

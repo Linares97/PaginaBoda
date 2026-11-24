@@ -6,8 +6,12 @@ CREATE TABLE IF NOT EXISTS families (
   code         TEXT NOT NULL UNIQUE,         -- slug único para el link, ej. "jostin-7f3a"
   label        TEXT NOT NULL,                -- etiqueta del grupo (col "Familia" o nombre del invitado solo)
   mesa         TEXT,                         -- número de mesa
-  responded_at TEXT                          -- ISO timestamp del envío del RSVP (NULL = pendiente)
+  responded_at TEXT,                         -- ISO timestamp del envío del RSVP (NULL = pendiente)
+  lang         TEXT NOT NULL DEFAULT 'es'    -- idioma del RSVP: 'es' | 'en'
 );
+
+-- Para una base ya existente:
+--   ALTER TABLE families ADD COLUMN lang TEXT NOT NULL DEFAULT 'es';
 
 CREATE TABLE IF NOT EXISTS guests (
   id           INTEGER PRIMARY KEY AUTOINCREMENT,
