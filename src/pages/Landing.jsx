@@ -4,7 +4,7 @@ import { SITE } from '../lib/config.js';
 import { useReveal, useCountdown, useParallax, Photo, GrainOverlay, Particles } from '../lib/ui.jsx';
 import RsvpSection from '../components/RsvpSection.jsx';
 
-function Nav({ t }) {
+function Nav({ t, rsvpActivo }) {
   const [solid, setSolid] = useState(false);
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > window.innerHeight * 0.7);
@@ -18,7 +18,7 @@ function Nav({ t }) {
         <a href="#historia">{t.nav.historia}</a>
         <a href="#evento">{t.nav.evento}</a>
         <a href="#galeria">{t.nav.galeria}</a>
-        <a className="cta" href="#confirmar">{t.nav.confirmar}</a>
+        {rsvpActivo && <a className="cta" href="#confirmar">{t.nav.confirmar}</a>}
       </div>
     </nav>
   );
@@ -285,7 +285,7 @@ function Gifts({ t }) {
   );
 }
 
-/*function ConfirmSection({ t, onLang }) {
+function ConfirmSection({ t, onLang }) {
   const { code } = useParams();
   // Sin código no hay familia, así que no hay idioma que elegir: siempre español.
   const T = SITE.rsvpTextos.es;
@@ -304,7 +304,7 @@ function Gifts({ t }) {
       </div>
     </section>
   );
-}*/
+}
 
 function Footer({ t }) {
   return (
@@ -317,14 +317,27 @@ function Footer({ t }) {
 
 export default function Landing() {
   useReveal();
-  // El idioma se decide una sola vez aquí: RsvpSection avisa el lang de la familia
-  // al cargarla. Sin código en la URL nunca se llama y queda en español.
+  const { code } = useParams();
+  // El idioma se decide una sola vez aquí. Sin código en la URL queda en español.
   const [lang, setLang] = useState('es');
   const t = SITE.landingTextos[lang] || SITE.landingTextos.es;
+
+  // Con el RSVP activo el idioma llega por onLang, porque RsvpSection ya pide la
+  // familia. Apagado, nadie la pide: la consultamos aquí solo para saber el idioma.
+  useEffect(() => {
+    if (!code || SITE.rsvpActivo) return;
+    let vigente = true;
+    fetch(`/api/rsvp/${encodeURIComponent(code)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { if (vigente && d?.lang === 'en') setLang('en'); })
+      .catch(() => {});
+    return () => { vigente = false; };
+  }, [code]);
+
   return (
     <>
       <GrainOverlay />
-      <Nav t={t} />
+      <Nav t={t} rsvpActivo={SITE.rsvpActivo} />
       <Hero t={t} />
       <Countdown t={t} />
       <Story t={t} />
@@ -332,7 +345,7 @@ export default function Landing() {
       <DressCode t={t} />
       <Gallery t={t} />
       <Gifts t={t} />
-      <ConfirmSection t={t} onLang={setLang} />
+      {SITE.rsvpActivo && <ConfirmSection t={t} onLang={setLang} />}
       <Footer t={t} />
     </>
   );

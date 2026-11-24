@@ -75,6 +75,12 @@ export const SITE = {
     ],
   },
 
+  // Sección de confirmación (RSVP). En false desaparece del Landing y se quita el
+  // enlace "Confirmar" del navbar. Los links /i/<code> siguen funcionando (solo
+  // muestran la invitación) y el panel de admin sigue viendo lo ya confirmado.
+  // Ponlo en true para volver a habilitarla.
+  rsvpActivo: false,
+
   // Textos de la sección de confirmación embebida (RsvpSection), por idioma.
   // El idioma lo define families.lang: 'en' → inglés; vacío o cualquier otro valor → español.
   rsvpTextos: {
